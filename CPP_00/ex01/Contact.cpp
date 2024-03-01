@@ -79,15 +79,15 @@ void	Contact::print_line()
 	print_string_width(this->_last_name, 10);
 	std::cout << '|';
 	print_string_width(this->_nickname, 10);
-	std::cout << '|' << std::endl;
+	std::cout << '|' << '\n';
 }
 
 void	Contact::print_full()
 {
-	std::cout << std::endl;
-	std::cout << this->_index << ".\t" << this->_first_name << std::endl;
-	std::cout << "\t" << this->_last_name << std::endl;
-	std::cout << "\t\"" << this->_nickname << '"' << std::endl;
-	std::cout << "\t" << this->_nbr << std::endl;
-	std::cout << "\t" << "(" << this->_secret << ")" << std::endl;
+	std::cout << '\n';
+	std::cout << this->_index << ".\t" << this->_first_name << '\n';
+	std::cout << "\t" << this->_last_name << '\n';
+	std::cout << "\t\"" << this->_nickname << '"' << '\n';
+	std::cout << "\t" << this->_nbr << '\n';
+	std::cout << "\t" << "(" << this->_secret << ")" << '\n';
 }

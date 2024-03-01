@@ -20,7 +20,7 @@ void	PhoneBook::newfirstname()
 	std::getline(std::cin, buffer);
 	while (buffer.empty())
 	{
-		std::cerr << "something went wrong, try again!" << std::endl;
+		std::cerr << "something went wrong, try again!" << '\n';
 		std::cout << "first name: ";
 		std::getline(std::cin, buffer);
 	}
@@ -35,7 +35,7 @@ void	PhoneBook::newlastname()
 	std::getline(std::cin, buffer);
 	while (buffer.empty())
 	{
-		std::cerr << "something went wrong, try again!" << std::endl;
+		std::cerr << "something went wrong, try again!" << '\n';
 		std::cout << "last name: ";
 		std::getline(std::cin, buffer);
 	}
@@ -50,7 +50,7 @@ void	PhoneBook::newnickname()
 	std::getline(std::cin, buffer);
 	while (buffer.empty())
 	{
-		std::cerr << "something went wrong, try again!" << std::endl;
+		std::cerr << "something went wrong, try again!" << '\n';
 		std::cout << "nickname: ";
 		std::getline(std::cin, buffer);
 	}
@@ -78,7 +78,7 @@ void	PhoneBook::newnbr()
 	std::getline(std::cin, buffer);
 	while(buffer.empty() || bad_nbr(buffer))
 	{
-		std::cerr << "something went wrong, try again!" << std::endl;
+		std::cerr << "something went wrong, try again!" << '\n';
 		std::cout << "phonenumber: ";
 		std::getline(std::cin, buffer);
 	}
@@ -93,7 +93,7 @@ void	PhoneBook::newsecret()
 	std::getline(std::cin, buffer);
 	while (buffer.empty())
 	{
-		std::cerr << "something went wrong (everyone has a secret)" << std::endl;
+		std::cerr << "something went wrong (everyone has a secret)" << '\n';
 		std::cout << "darkest secret: ";
 		std::getline(std::cin, buffer);
 	}
@@ -106,12 +106,12 @@ void	PhoneBook::add()
 
 	if (this->_size == 8)
 	{
-		std::cout << "are you sure? this will overwrite the oldest contact (y/n)" << std::endl;
+		std::cout << "are you sure? this will overwrite the oldest contact (y/n)" << '\n';
 		std::getline(std::cin, buffer);
 		if (!(!buffer.compare("y") || !buffer.compare("yes") || !buffer.compare("1")))
 			return;
 	}
-	std::cout << "making a new contact..." << std::endl;
+	std::cout << "making a new contact..." << '\n';
 	this->newfirstname();
 	this->newlastname();
 	this->newnickname();
@@ -132,21 +132,21 @@ void	PhoneBook::print()
 {
 	char	i = 0;
 
-	std::cout << " ~~~~~~~~~~~~ PHONEBOOK ~~~~~~~~~~~~~" << std::endl;
-	std::cout << "+---+----------+----------+----------+" << std::endl;
+	std::cout << " ~~~~~~~~~~~~ PHONEBOOK ~~~~~~~~~~~~~" << '\n';
+	std::cout << "+---+----------+----------+----------+" << '\n';
 	while (i < this->_size)
 	{
 		this->_contacts[(int) i].print_line();
 		i++;
 	}
-	std::cout << "+---+----------+----------+----------+" << std::endl;
+	std::cout << "+---+----------+----------+----------+" << '\n';
 }
 
 void	PhoneBook::search()
 {
 	if (!this->_size)
 	{
-		std::cout << "no contacts yet" << std::endl;
+		std::cout << "no contacts yet" << '\n';
 		return;
 	}
 
@@ -159,7 +159,7 @@ void	PhoneBook::search()
 	{
 		std::cin.clear(std::cin.goodbit);
 		std::cin.ignore(10000, '\n');
-		std::cerr << "something went wrong, try again!" << std::endl;
+		std::cerr << "something went wrong, try again!" << '\n';
 		std::cout << "make sure the index exists: ";
 		std::cin >> i;
 	}

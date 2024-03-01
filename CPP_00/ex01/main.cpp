@@ -9,7 +9,7 @@ bool	handle_input(PhoneBook *book)
 	std::getline(std::cin, buffer);
 	while (!std::cin.good())
 	{
-		std::cerr << "something went wrong, try again!" << std::endl;
+		std::cerr << "something went wrong, try again!" << '\n';
 		std::getline(std::cin, buffer);
 	}
 	if (!buffer.compare("EXIT"))
@@ -19,7 +19,7 @@ bool	handle_input(PhoneBook *book)
 	else if (!buffer.compare("SEARCH"))
 		book->search();
 	else
-		std::cout << "type one of: ADD, SEARCH, EXIT" << std::endl;
+		std::cout << "type one of: ADD, SEARCH, EXIT" << '\n';
 	return true;
 }
 
@@ -27,10 +27,10 @@ int	main()
 {
 	PhoneBook book;
 
-	std::cout << "what would you like to do?" << std::endl;
-	std::cout << "type one of: ADD, SEARCH, EXIT" << std::endl;
+	std::cout << "what would you like to do?" << '\n';
+	std::cout << "type one of: ADD, SEARCH, EXIT" << '\n';
 	while (handle_input(&book))
-		std::cout << std::endl << "what would you like to do?" << std::endl;
+		std::cout << '\n' << "what would you like to do?" << '\n';
 }
 
 // test emtpy inputs (and NULL?)
