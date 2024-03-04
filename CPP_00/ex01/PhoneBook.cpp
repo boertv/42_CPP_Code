@@ -12,16 +12,17 @@ int	PhoneBook::next_index()
 	return this->_oldest;
 }
 
+/* ADD CONTACT INFO */
 void	PhoneBook::newfirstname()
 {
 	std::string buffer;
 
-	std::cout << "first name: ";
+	std::cout << "\tfirst name: ";
 	std::getline(std::cin, buffer);
 	while (buffer.empty())
 	{
 		std::cerr << "something went wrong, try again!" << '\n';
-		std::cout << "first name: ";
+		std::cout << "\tfirst name: ";
 		std::getline(std::cin, buffer);
 	}
 	this->_contacts[this->next_index()].setfirst_name(buffer);
@@ -31,12 +32,12 @@ void	PhoneBook::newlastname()
 {
 	std::string buffer;
 
-	std::cout << "last name: ";
+	std::cout << "\tlast name: ";
 	std::getline(std::cin, buffer);
 	while (buffer.empty())
 	{
 		std::cerr << "something went wrong, try again!" << '\n';
-		std::cout << "last name: ";
+		std::cout << "\tlast name: ";
 		std::getline(std::cin, buffer);
 	}
 	this->_contacts[this->next_index()].setlast_name(buffer);
@@ -46,18 +47,18 @@ void	PhoneBook::newnickname()
 {
 	std::string buffer;
 
-	std::cout << "nickname: ";
+	std::cout << "\tnickname: ";
 	std::getline(std::cin, buffer);
 	while (buffer.empty())
 	{
 		std::cerr << "something went wrong, try again!" << '\n';
-		std::cout << "nickname: ";
+		std::cout << "\tnickname: ";
 		std::getline(std::cin, buffer);
 	}
 	this->_contacts[this->next_index()].setnickname(buffer);
 }
 
-static bool	bad_nbr(std::string str)
+static bool	is_bad_nbr(std::string str)
 {
 	std::string::iterator it = str.begin();
 
@@ -74,12 +75,12 @@ void	PhoneBook::newnbr()
 {
 	std::string buffer;
 
-	std::cout << "phonenumber: ";
+	std::cout << "\tphonenumber: ";
 	std::getline(std::cin, buffer);
-	while(buffer.empty() || bad_nbr(buffer))
+	while(buffer.empty() || is_bad_nbr(buffer))
 	{
 		std::cerr << "something went wrong, try again!" << '\n';
-		std::cout << "phonenumber: ";
+		std::cout << "\tphonenumber: ";
 		std::getline(std::cin, buffer);
 	}
 	this->_contacts[this->next_index()].setnbr(buffer);
@@ -89,26 +90,27 @@ void	PhoneBook::newsecret()
 {
 	std::string buffer;
 
-	std::cout << "darkest secret (you can tell me): ";
+	std::cout << "\tdarkest secret: ";
 	std::getline(std::cin, buffer);
 	while (buffer.empty())
 	{
 		std::cerr << "something went wrong (everyone has a secret)" << '\n';
-		std::cout << "darkest secret: ";
+		std::cout << "\tdarkest secret (you can tell me): ";
 		std::getline(std::cin, buffer);
 	}
 	this->_contacts[this->next_index()].setsecret(buffer);
 }
 
+/* FRONT FUNCTIONS */
 void	PhoneBook::add()
 {
 	std::string buffer;
 
 	if (this->_size == 8)
 	{
-		std::cout << "are you sure? this will overwrite the oldest contact (y/n)" << '\n';
+		std::cout << "are you sure? this will overwrite the contact at index " << (int) this->_oldest + 1 << '\n';
 		std::getline(std::cin, buffer);
-		if (!(!buffer.compare("y") || !buffer.compare("yes") || !buffer.compare("1")))
+		if (!(!buffer.compare("y") || !buffer.compare("yes")))
 			return;
 	}
 	std::cout << "making a new contact..." << '\n';
@@ -160,7 +162,7 @@ void	PhoneBook::search()
 		std::cin.clear(std::cin.goodbit);
 		std::cin.ignore(10000, '\n');
 		std::cerr << "something went wrong, try again!" << '\n';
-		std::cout << "make sure the index exists: ";
+		std::cout << "give an index between 1 and " << (int) this->_size << ": ";
 		std::cin >> i;
 	}
 	std::cin.ignore(10000, '\n');

@@ -19,7 +19,7 @@ bool	handle_input(PhoneBook *book)
 	else if (!buffer.compare("SEARCH"))
 		book->search();
 	else
-		std::cout << "type one of: ADD, SEARCH, EXIT" << '\n';
+		std::cout << "type one of: ADD, SEARCH, EXIT";
 	return true;
 }
 
@@ -32,5 +32,3 @@ int	main()
 	while (handle_input(&book))
 		std::cout << '\n' << "what would you like to do?" << '\n';
 }
-
-// test emtpy inputs (and NULL?)
