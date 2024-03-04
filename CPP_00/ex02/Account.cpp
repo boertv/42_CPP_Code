@@ -13,8 +13,11 @@ int	Account::_totalNbDeposits = 0;
 int	Account::_totalNbWithdrawals = 0;
 
 Account::Account()
+	: _accountIndex(_nbAccounts), _amount(0), _nbDeposits(0), _nbWithdrawals(0)
 {
-	std::cout << "\nEMPTY CONSTRUCTOR CALLED\n !!!!!!!!!" << std::endl;
+	Account::_nbAccounts++;
+	Account::_displayTimestamp();
+	std::cout << " index:" << this->_accountIndex << ";amount:" << this->_amount << ";created" << '\n';
 }
 
 void	Account::_displayTimestamp()
