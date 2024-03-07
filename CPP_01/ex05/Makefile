@@ -1,0 +1,13 @@
+NAME = harl
+
+all:	$(NAME)
+
+$(NAME):
+	c++ -Wall -Wextra -Werror -std=c++98 Harl.cpp main.cpp -o $(NAME)
+
+fclean:
+	rm $(NAME)
+
+re: fclean all
+
+.PHONY: all fclean re
