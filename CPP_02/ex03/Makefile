@@ -1,4 +1,4 @@
-NAME = bsp
+NAME = is_point_in_triangle
 
 all:	$(NAME)
 

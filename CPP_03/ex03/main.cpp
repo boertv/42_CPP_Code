@@ -30,10 +30,8 @@ int	main()
 	diana.attack("the queen");
 	diana.beRepaired(5);
 	diana.takeDamage(25);
-	diana.takeDamage(80);
-	diana.beRepaired(5);
-	std::cout << '\n';
 	diana.highFivesGuys();
 	diana.guardGate();
 	diana.whoAmI();
+	std::cout << '\n';
 }

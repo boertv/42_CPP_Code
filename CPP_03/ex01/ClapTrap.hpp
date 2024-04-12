@@ -3,7 +3,6 @@
 
 # include <string>
 
-// ORTHODOX CANNONICAL FORM
 class	ClapTrap
 {
 protected:

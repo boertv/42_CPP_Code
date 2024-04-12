@@ -13,8 +13,8 @@ int	main()
 	muscle.beRepaired(10);
 	muscle.takeDamage(100);
 	muscle.attack("the wind");
+	muscle.guardGate();
 	muscle.takeDamage(100);
 	muscle.attack("the wind");
-	muscle.guardGate();
 	std::cout << '\n';
 }

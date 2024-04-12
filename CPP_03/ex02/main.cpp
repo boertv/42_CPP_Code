@@ -15,8 +15,8 @@ int	main()
 	frag.beRepaired(50);
 	frag.takeDamage(100);
 	frag.attack("the sand");
+	frag.highFivesGuys();
 	frag.takeDamage(100);
 	frag.attack("the sand");
-	frag.highFivesGuys();
 	std::cout << '\n';
 }
