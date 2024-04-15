@@ -1,13 +1,12 @@
 #ifndef BUREAUCRAT_H
 # define BUREAUCRAT_H
 
-# include <string>
 # include <iostream>
 
 class Bureaucrat
 {
-	std::string const	name;
-	int					grade;
+	std::string const	_name;
+	int					_grade;
 
 public:
 	Bureaucrat();
@@ -18,20 +17,21 @@ public:
 
 	std::string	getName() const;
 	int			getGrade() const;
+
 	void		promote();
 	void		demote();
 
 
 	class	GradeTooHighException : public std::exception
 	{
-	public:
-		const char	*what() const throw();
+		public:
+			const char	*what() const throw();
 	};
 
 	class	GradeTooLowException : public std::exception
 	{
-	public:
-		const char	*what() const throw();
+		public:
+			const char	*what() const throw();
 	};
 };
 

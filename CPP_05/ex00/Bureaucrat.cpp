@@ -1,18 +1,16 @@
 #include "Bureaucrat.hpp"
 
-/* CONSTRUCTORS AND '=' OVERLOAD */
+/* CONSTRUCTORS */
 Bureaucrat::Bureaucrat()
-	: name("John"), grade(150) {}
+	: _name("John"), _grade(150) {}
 
 Bureaucrat::Bureaucrat(std::string name, int grade)
-	: name(name)
+	: _name(name), _grade(grade)
 {
 	if (grade < 1)
 		throw (Bureaucrat::GradeTooHighException());
-	else if (grade > 150)
+	if (grade > 150)
 		throw (Bureaucrat::GradeTooLowException());
-	else
-		this->grade = grade;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const& src) {
@@ -20,9 +18,10 @@ Bureaucrat::Bureaucrat(Bureaucrat const& src) {
 
 Bureaucrat::~Bureaucrat() {}
 
+/* OPERATOR OVERLOADS */
 Bureaucrat&	Bureaucrat::operator=(Bureaucrat const& rhs)
 {
-	this->grade = rhs.getGrade();
+	this->_grade = rhs.getGrade();
 	return *this;
 }
 
@@ -34,24 +33,24 @@ std::ostream&	operator<<(std::ostream& stream, Bureaucrat const& rhs)
 
 /* GETTERS AND SETTERS */
 std::string	Bureaucrat::getName() const {
-	return this->name; }
+	return this->_name; }
 
 int	Bureaucrat::getGrade() const {
-	return this->grade; }
+	return this->_grade; }
 
 /* MEMBER FUNCTIONS */
 void	Bureaucrat::promote()
 {
-	if (grade <= 1)
+	if (_grade <= 1)
 		throw (GradeTooHighException());
-	grade--;
+	_grade--;
 }
 
 void	Bureaucrat::demote()
 {
-	if (grade >= 150)
+	if (_grade >= 150)
 		throw (GradeTooLowException());
-	grade++;
+	_grade++;
 }
 
 
