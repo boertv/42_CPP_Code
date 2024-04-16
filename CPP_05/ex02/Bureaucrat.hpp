@@ -2,7 +2,7 @@
 # define BUREAUCRAT_H
 
 # include <iostream>
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -21,8 +21,8 @@ public:
 
 	void		promote();
 	void		demote();
-	void		signForm(AForm& form) throw();
-	void		executeForm(AForm const& form);
+	void		signForm(AForm& form) const throw();
+	void		executeForm(AForm const& form) const;
 
 
 	class	GradeTooHighException : public std::exception

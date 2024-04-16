@@ -14,7 +14,7 @@ public:
 	~ShrubberyCreationForm();
 	ShrubberyCreationForm&	operator=(ShrubberyCreationForm const& rhs);
 
-	void	concrete_execute(Bureaucrat const& executor) const;
+	void	concrete_execute() const;
 };
 
 #endif

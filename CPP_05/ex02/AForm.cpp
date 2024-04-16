@@ -63,7 +63,7 @@ void	AForm::execute(Bureaucrat const& executor) const
 		throw (NotSignedException());
 	if (executor.getGrade() > _grade_exec)
 		throw (GradeTooLowException());
-	this->concrete_execute(executor);
+	this->concrete_execute();
 }
 
 

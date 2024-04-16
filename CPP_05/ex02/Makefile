@@ -1,9 +1,12 @@
-NAME = form
+NAME = execute
+
+CPP = c++ -Wall -Wextra -Werror -std=c++98
+CPP += Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 
 all:	$(NAME)
 
 $(NAME):
-	c++ -Wall -Wextra -Werror -std=c++98 Bureaucrat.cpp Form.cpp main.cpp -o $(NAME)
+	$(CPP) main.cpp -o $(NAME)
 
 fclean:
 	rm $(NAME)

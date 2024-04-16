@@ -54,7 +54,7 @@ void	Bureaucrat::demote()
 	_grade++;
 }
 
-void	Bureaucrat::signForm(AForm& form) throw()
+void	Bureaucrat::signForm(AForm& form) const throw()
 {
 	if (form.getSigned())
 	{
@@ -72,7 +72,7 @@ void	Bureaucrat::signForm(AForm& form) throw()
 	}
 }
 
-void	Bureaucrat::executeForm(AForm const& form)
+void	Bureaucrat::executeForm(AForm const& form) const
 {
 	try
 	{
