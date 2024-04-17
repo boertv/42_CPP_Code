@@ -21,6 +21,10 @@ int	main()
 	Intern		tommy;
 	AForm		*form;
 
+	form = tommy.makeForm("nope", "lmao");
+	run_form(form, tom);
+	std::cout << "\n";
+
 	form = tommy.makeForm("robotomy request", "human");
 	run_form(form, tom);
 
@@ -28,8 +32,5 @@ int	main()
 	run_form(form, tom);
 
 	form = tommy.makeForm("shrubbery creation", "bocal");
-	run_form(form, tom);
-
-	form = tommy.makeForm("nope", "lmao");
 	run_form(form, tom);
 }

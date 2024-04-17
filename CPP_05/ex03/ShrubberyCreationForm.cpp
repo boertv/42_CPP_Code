@@ -30,7 +30,7 @@ void	ShrubberyCreationForm::concrete_execute() const
 	outfile.open(std::string(_target).append("_shrubbery"), std::ofstream::app);
 	if (outfile.fail())
 	{
-		std::cerr << "opening of file " << std::string(_target).append("_shrubbery") << " failed\n";
+		std::cout << "opening of file " << std::string(_target).append("_shrubbery") << " failed\n";
 		return ;
 	}
 	outfile << "\n               ,@@@@@@@,\n";

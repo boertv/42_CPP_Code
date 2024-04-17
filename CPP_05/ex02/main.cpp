@@ -6,6 +6,8 @@
 
 static void	run_form(AForm *form, Bureaucrat const& bur)
 {
+	if (!form)
+		return ;
 	bur.signForm(*form);
 	bur.executeForm(*form);
 	delete form;
@@ -15,18 +17,29 @@ static void	run_form(AForm *form, Bureaucrat const& bur)
 int	main()
 {
 	Bureaucrat	tom("Tom", 5);
-
-	AForm	*form = new RobotomyRequestForm("human");
-	run_form(form, tom);
+	AForm		*form;
 
 	form = new RobotomyRequestForm("human");
-	run_form(form, tom);
+	try
+	{
+		form->execute(tom);
+	}
+	catch (std::exception const& e)
+	{
+		std::cout << "caught an exception ! it says " << e.what() << "\n";
+	}
+	tom.signForm(*form);
+	try
+	{
+		form->execute(Bureaucrat("new hire", 150));
+	}
+	catch (std::exception const& e)
+	{
+		std::cout << "caught an exception ! it says " << e.what() << "\n";
+	}
+	delete form;
+	std::cout << "\n";
 
-	form = new RobotomyRequestForm("human");
-	run_form(form, tom);
-
-	form = new RobotomyRequestForm("human");
-	run_form(form, tom);
 
 	form = new RobotomyRequestForm("human");
 	run_form(form, tom);

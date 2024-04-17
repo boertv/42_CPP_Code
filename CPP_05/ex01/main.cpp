@@ -4,6 +4,26 @@
 
 int main()
 {
+	{
+		try
+		{
+			Form	high("high", 1, 0);
+		}
+		catch (std::exception const& e)
+		{
+			std::cout << "caught an error! it says: " << e.what() << '\n';
+		}
+		try
+		{
+			Form	low("low", 1000, 150);
+		}
+		catch (std::exception const& e)
+		{
+			std::cout << "caught an error! it says: " << e.what() << '\n';
+		}
+	}
+	std::cout << "\n";
+
 	Form	form("Important Form", 50, 50);
 	Form	copy(form);
 	std::cout << form << '\n';

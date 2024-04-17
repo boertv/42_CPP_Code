@@ -58,7 +58,7 @@ void	Bureaucrat::signForm(AForm& form) const throw()
 {
 	if (form.getSigned())
 	{
-		std::cerr << _name << " couldn't sign " << form.getName() << " because it is already signed.\n";
+		std::cout << _name << " couldn't sign " << form.getName() << " because it is already signed.\n";
 		return ;
 	}
 	try
@@ -68,7 +68,7 @@ void	Bureaucrat::signForm(AForm& form) const throw()
 	}
 	catch(std::exception const& e)
 	{
-		std::cerr << _name << " couldn't sign " << form.getName() << " because " << e.what() << ".\n";
+		std::cout << _name << " couldn't sign " << form.getName() << " because " << e.what() << ".\n";
 	}
 }
 
@@ -81,7 +81,7 @@ void	Bureaucrat::executeForm(AForm const& form) const
 	}
 	catch(std::exception const& e)
 	{
-		std::cerr << _name << " couldn't execute " << form.getName() << " because " << e.what() << ".\n";
+		std::cout << _name << " couldn't execute " << form.getName() << " because " << e.what() << ".\n";
 	}
 }
 

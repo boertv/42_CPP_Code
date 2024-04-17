@@ -10,7 +10,7 @@ int main()
 		}
 		catch(const std::exception& e)
 		{
-			std::cerr << "Tried to create a bureaucrat but " << e.what() << '\n';
+			std::cout << "Tried to create a bureaucrat but " << e.what() << '\n';
 		}
 		try
 		{
@@ -18,7 +18,7 @@ int main()
 		}
 		catch(const std::exception& e)
 		{
-			std::cerr << "Tried to create a bureaucrat but " << e.what() << '\n';
+			std::cout << "Tried to create a bureaucrat but " << e.what() << '\n';
 		}
 	}
 std::cout << "\n";
@@ -37,7 +37,7 @@ std::cout << "\n";
 		}
 		catch (std::exception& e)
 		{
-			std::cerr << "Caught an error! It says: " << e.what() << "\n";
+			std::cout << "Caught an error! It says: " << e.what() << "\n";
 		}
 	}
 std::cout << "\n";
@@ -51,7 +51,7 @@ std::cout << "\n";
 		}
 		catch (std::exception& e)
 		{
-			std::cerr << "Tried to demote a bureaucrat but " << e.what() << "\n";
+			std::cout << "Tried to demote a bureaucrat but " << e.what() << "\n";
 		}
 	}
 std::cout << "\n";
@@ -65,7 +65,7 @@ std::cout << "\n";
 		}
 		catch (std::exception& e)
 		{
-			std::cerr << "Tried to promote a bureaucrat but " << e.what() << "\n";
+			std::cout << "Tried to promote a bureaucrat but " << e.what() << "\n";
 		}
 	}
 }

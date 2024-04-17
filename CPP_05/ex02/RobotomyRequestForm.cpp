@@ -31,7 +31,7 @@ void	RobotomyRequestForm::concrete_execute() const
 		_first_run = true;
 		srand(time(0));
 	}
-	std::cout << "  *brrrrrrrrrt\tbzzzzt*\n";
+	std::cout << "  *brrrrrrrrrt .. bzzzzt*\n";
 	if (rand() % 2)
 		std::cout << "failed to robotomize " << _target << ".\n";
 	else
