@@ -3,7 +3,7 @@ NAME = serialise
 all:	$(NAME)
 
 $(NAME):
-	c++ -Wall -Wextra -Werror -std=c++98 INSERTFILEHERE.cpp main.cpp -o $(NAME)
+	c++ -Wall -Wextra -Werror -std=c++98 Data.cpp Serializer.cpp main.cpp -o $(NAME)
 
 fclean:
 	rm $(NAME)
