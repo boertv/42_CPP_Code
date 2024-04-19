@@ -111,8 +111,9 @@ static void	output_int(Value& value)
 		std::cout << "'" << static_cast<char>(value.i) << "'";
 	std::cout << "\n";
 	std::cout << "int: " << value.i << "\n";
-	std::cout << "float: " << static_cast<float>(value.i) << ".0f\n";
-	std::cout << "double: " << static_cast<double>(value.i) << ".0\n";
+	std::cout << std::fixed << std::setprecision(1);
+	std::cout << "float: " << static_cast<float>(value.i) << "f\n";
+	std::cout << "double: " << static_cast<double>(value.i) << "\n";
 }
 
 static void	output_float(Value& value)
