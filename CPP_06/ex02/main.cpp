@@ -43,22 +43,19 @@ void	identify(Base& p)
 		(void) dynamic_cast<A const&>(p);
 		return (void)(std::cout << "A\n");
 	}
-	catch (...)
-	{}
+	catch (...) {}
 	try
 	{
 		(void) dynamic_cast<B const&>(p);
 		return (void)(std::cout << "B\n");
 	}
-	catch (...)
-	{}
+	catch (...) {}
 	try
 	{
 		(void) dynamic_cast<C const&>(p);
 		return (void)(std::cout << "C\n");
 	}
-	catch (...)
-	{}
+	catch (...) {}
 }
 
 static void id_both(Base* p)

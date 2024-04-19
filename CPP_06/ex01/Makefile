@@ -1,4 +1,4 @@
-NAME = serialise
+NAME = serialize
 
 all:	$(NAME)
 
