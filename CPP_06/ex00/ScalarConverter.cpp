@@ -92,82 +92,82 @@ static void	assign_value(std::string const& lit, char& type, Value& value)
 	}
 }
 
-static void	output_char(Value& value)
+static void	output(char const& value)
 {
-	std::cout << "char: '" << value.c << "'\n";
-	std::cout << "int: " << static_cast<int>(value.c) << "\n";
-	std::cout << "float: " << static_cast<float>(value.c) << ".0f\n";
-	std::cout << "double: " << static_cast<double>(value.c) << ".0\n";
+	std::cout << "char: '" << value << "'\n";
+	std::cout << "int: " << static_cast<int>(value) << "\n";
+	std::cout << "float: " << static_cast<float>(value) << ".0f\n";
+	std::cout << "double: " << static_cast<double>(value) << ".0\n";
 }
 
-static void	output_int(Value& value)
+static void	output(int const& value)
 {
 	std::cout << "char: ";
-	if (value.i < 0 || value.i > 127)
+	if (value < 0 || value > 127)
 		std::cout << "impossible";
-	else if (!std::isprint(value.i))
+	else if (!std::isprint(value))
 		std::cout << "non displayable";
 	else
-		std::cout << "'" << static_cast<char>(value.i) << "'";
+		std::cout << "'" << static_cast<char>(value) << "'";
 	std::cout << "\n";
-	std::cout << "int: " << value.i << "\n";
-	std::cout << std::fixed << std::setprecision(1);
-	std::cout << "float: " << static_cast<float>(value.i) << "f\n";
-	std::cout << "double: " << static_cast<double>(value.i) << "\n";
+	std::cout << "int: " << value << "\n";
+	std::cout << std::fixed << std::showpoint << std::setprecision(1);
+	std::cout << "float: " << static_cast<float>(value) << "f\n";
+	std::cout << "double: " << static_cast<double>(value) << "\n";
 }
 
-static void	output_float(Value& value)
+static void	output(float const& value)
 {
 	std::cout << "char: ";
-	if (std::isnan(value.f) || std::isinf(value.f) || value.f < 0 || value.f > 127)
+	if (std::isnan(value) || std::isinf(value) || value < 0 || value > 127)
 		std::cout << "impossible";
-	else if (!std::isprint(static_cast<int>(value.f)))
+	else if (!std::isprint(static_cast<int>(value)))
 		std::cout << "non displayable";
 	else
-		std::cout << "'" << static_cast<char>(value.f) << "'";
+		std::cout << "'" << static_cast<char>(value) << "'";
 	std::cout << "\n";
 	std::cout << "int: ";
-	if (std::isnan(value.f) || std::isinf(value.f) || value.f > INT32_MAX || value.f < INT32_MIN)
+	if (std::isnan(value) || std::isinf(value) || value > INT32_MAX || value < INT32_MIN)
 		std::cout << "impossible";
 	else
-		std::cout << static_cast<int>(value.f);
+		std::cout << static_cast<int>(value);
 	std::cout << "\n";
-	if (std::abs(value.f) < 1000000)
+	if (std::abs(value) < 1000000)
 	{
 		float garbage;
 		std::cout << std::fixed << std::showpoint << std::setprecision(3);
-		if (std::abs(std::modf(value.f, &garbage)) < 0.0005)
+		if (std::abs(std::modf(value, &garbage)) < 0.0005)
 			std::cout << std::setprecision(1);
 	}
-	std::cout << "float: " << value.f << "f\n";
-	std::cout << "double: " << static_cast<double>(value.f) << "\n";
+	std::cout << "float: " << value << "f\n";
+	std::cout << "double: " << static_cast<double>(value) << "\n";
 }
 
-static void	output_double(Value& value)
+static void	output(double const& value)
 {
 	std::cout << "char: ";
-	if (std::isnan(value.d) || std::isinf(value.d) || value.d < 0 || value.d > 127)
+	if (std::isnan(value) || std::isinf(value) || value < 0 || value > 127)
 		std::cout << "impossible";
-	else if (!std::isprint(static_cast<int>(value.d)))
+	else if (!std::isprint(static_cast<int>(value)))
 		std::cout << "non displayable";
 	else
-		std::cout << "'" << static_cast<char>(value.d) << "'";
+		std::cout << "'" << static_cast<char>(value) << "'";
 	std::cout << "\n";
 	std::cout << "int: ";
-	if (std::isnan(value.d) || std::isinf(value.d) || value.d > INT32_MAX || value.d < INT32_MIN)
+	if (std::isnan(value) || std::isinf(value) || value > INT32_MAX || value < INT32_MIN)
 		std::cout << "impossible";
 	else
-		std::cout << static_cast<int>(value.d);
+		std::cout << static_cast<int>(value);
 	std::cout << "\n";
-	if (std::abs(value.d) < 1000000)
+	if (std::abs(value) < 1000000)
 	{
 		double garbage;
 		std::cout << std::fixed << std::showpoint << std::setprecision(3);
-		if (std::abs(std::modf(value.d, &garbage)) < 0.0005)
+		if (std::abs(std::modf(value, &garbage)) < 0.0005)
 			std::cout << std::setprecision(1);
 	}
-	std::cout << "float: " << static_cast<float>(value.d) << "f\n";
-	std::cout << "double: " << value.d << "\n";
+	std::cout << "float: " << static_cast<float>(value) << "f\n";
+	std::cout << "double: " << value << "\n";
 }
 
 static void	output_series(Value& value, char type)
@@ -178,13 +178,13 @@ static void	output_series(Value& value, char type)
 			std::cout << "char: impossible\nint: impossible\nfloat: impossible\ndouble: impossible\n";
 			return ;
 		case 'c':
-			return output_char(value);
+			return output(value.c);
 		case 'i':
-			return output_int(value);
+			return output(value.i);
 		case 'f':
-			return output_float(value);
+			return output(value.f);
 		case 'd':
-			return output_double(value);
+			return output(value.d);
 	}
 }
 
