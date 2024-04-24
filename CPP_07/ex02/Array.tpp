@@ -1,3 +1,7 @@
+#ifdef ARRAY_H
+# ifndef ARRAY_T
+#  define ARRAY_T
+
 template <typename T>
 Array<T>::Array()
 	: _ptr(nullptr), _size(0) {}
@@ -47,3 +51,6 @@ size_t Array<T>::size() const
 {
 	return _size;
 }
+
+# endif
+#endif
