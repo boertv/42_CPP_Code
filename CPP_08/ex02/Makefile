@@ -1,9 +1,9 @@
-NAME = span
+NAME = freak
 
 all:	$(NAME)
 
 $(NAME):
-	c++ -Wall -Wextra -Werror -std=c++98 Span.cpp main.cpp -o $(NAME)
+	c++ -Wall -Wextra -Werror -std=c++98 main.cpp -o $(NAME)
 
 fclean:
 	rm $(NAME)
