@@ -42,7 +42,7 @@ template <typename T>
 T& Array<T>::operator[](size_t i) const
 {
 	if (i < 0 || i >= _size)
-		throw std::exception();
+		throw std::out_of_range("out of range innit");
 	return _ptr[i];
 }
 
