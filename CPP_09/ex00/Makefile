@@ -3,7 +3,7 @@ NAME = bct
 all:	$(NAME)
 
 $(NAME):
-	c++ -g -o0 -Wall -Wextra -Werror -std=c++98 BitcoinExchange.cpp main.cpp -o $(NAME)
+	c++ -Wall -Wextra -Werror -std=c++98 BitcoinExchange.cpp main.cpp -o $(NAME)
 
 clean:
 	@rm -rf $(NAME).dSYM
