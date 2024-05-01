@@ -19,14 +19,15 @@ static void trim_whitespace(std::string& str)
 		str.erase(it, str.end());
 }
 
-static bool check_nbr(std::string const& nbr, bool ban_comma = false)
+//will throw (hands)
+static void check_nbr(std::string const& nbr, bool ban_comma = false)
 {
 	if (nbr.empty())
-		return false;
+		throw std::invalid_argument("no value given");
 
 	std::string::const_iterator it = nbr.begin();
 	if (*it == '-')
-		return false;
+		throw std::invalid_argument(nbr + " is not a positive number");
 	for (; it != nbr.end(); ++it)
 	{
 		if (*it == '.' && !ban_comma)
@@ -35,40 +36,45 @@ static bool check_nbr(std::string const& nbr, bool ban_comma = false)
 			continue ;
 		}
 		if (!std::isdigit(*it))
-			return false;
+			throw std::invalid_argument(nbr + " is not a valid number");
 	}
-	return true;
 }
 
-static bool check_date(std::string const& date)
+//will throw (hands)
+static void check_date(std::string const& date)
 {
 	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
-		return false;
-	if (!check_nbr(date.substr(0, 4), true) || !check_nbr(date.substr(5, 2), true) || !check_nbr(date.substr(8), true))
-		return false;
+		throw std::invalid_argument(date + " is not a valid date (yyyy-mm-dd)");
+	try {
+		check_nbr(date.substr(0, 4), true);
+		check_nbr(date.substr(5, 2), true);
+		check_nbr(date.substr(8), true); }
+	catch (std::exception const& e) {
+		throw std::invalid_argument(date + " is not a valid date (yyyy-mm-dd)"); }
 	int	month = (date[5] - '0') * 10 + (date[6] - '0');
 	int	day = (date[8] - '0') * 10 + (date[9] - '0');
-	if (month > 12)
-		return false;
+	if (!month || month > 12)
+		throw std::invalid_argument(date + " has an invalid month");
+	if (!day)
+		throw std::invalid_argument(date + " has an invalid day");
 	if (month == 2)
 	{
 		int	year = (date[0] - '0') * 1000 + (date[1] - '0') * 100 + (date[2] - '0') * 10 + (date[3] - '0');
 		if (!(year % 400) || (!(year % 4) && year % 100))
 		{
 			if (day > 29)
-				return false;
+				throw std::invalid_argument(date + " has an invalid day");
 		}
 		else if (day > 28)
-			return false;
+			throw std::invalid_argument(date + " has an invalid day");
 	}
 	else if ((month <= 7 && month % 2) || (month >=8 && !(month % 2)))
 	{
 		if (day > 31)
-			return false;
+			throw std::invalid_argument(date + " has an invalid day");
 	}
 	else if (day > 30)
-		return false;
-	return true;
+		throw std::invalid_argument(date + " has an invalid day");
 }
 
 /*
@@ -82,7 +88,7 @@ BitcoinExchange::BitcoinExchange(BitcoinExchange const& src) { this->operator=(s
 
 BitcoinExchange::BitcoinExchange(std::string const& btc_file)
 {
-	std::ifstream ifs(btc_file);
+	std::ifstream ifs(btc_file.c_str());
 	if (!ifs.good())
 		throw std::invalid_argument("could not open the database: " + btc_file);
 	while (ifs.good())
@@ -100,8 +106,11 @@ BitcoinExchange::BitcoinExchange(std::string const& btc_file)
 		trim_whitespace(temp_nbr);
 		if (!temp_pair.first.compare("date") && !temp_nbr.compare("exchange_rate"))
 			continue ;
-		if (!check_nbr(temp_nbr) || !check_date(temp_pair.first))
-			throw std::invalid_argument("bad database element: " + temp_pair.first + "," + temp_nbr);
+		try {
+			check_nbr(temp_nbr);
+			check_date(temp_pair.first); }
+		catch (std::exception const& e) {
+			throw std::invalid_argument("bad database element: " + temp_pair.first + "," + temp_nbr); }
 		temp_pair.second = static_cast<float>(atof(temp_nbr.c_str()));
 		if (!btc_history.insert(temp_pair).second)
 			throw std::invalid_argument("failed to build database element: " + temp_pair.first + "," + temp_nbr);
@@ -129,27 +138,27 @@ void BitcoinExchange::process_line(std::string const& input_line) const
 	if (input_line.empty())
 		return ;
 	if (input_line.find("|") == std::string::npos)
-		throw std::invalid_argument("bad input: " + input_line);
+		throw std::invalid_argument("bad input => " + input_line);
 	std::string date = input_line.substr(0, input_line.find("|"));
-	std::string amount = input_line.substr(input_line.find("|") + 1);
+	std::string amount_str = input_line.substr(input_line.find("|") + 1);
 	trim_whitespace(date);
-	trim_whitespace(amount);
-	if (!date.compare("date") && !amount.compare("value"))
+	trim_whitespace(amount_str);
+	if (!date.compare("date") && !amount_str.compare("value"))
 		return ;
-	if (!check_date(date))
-		throw std::invalid_argument("bad date: " + date); // also differentiate?
-	if (!check_nbr(amount))
-		throw std::invalid_argument("bad value: " + amount); // differentiate between negative, bigger than 1000, not a nbr, ..?
-
+	check_date(date);
+	check_nbr(amount_str);
+	float amount = static_cast<float>(std::atof(amount_str.c_str()));
+	if (amount > 1000)
+		throw std::invalid_argument(amount_str + " is a too large value");
 	std::cout << date << " => " << amount << " = ";
-	std::cout << (static_cast<float>(std::atof(amount.c_str())) * (*btc_history.lower_bound(date)).second);
+	std::cout << (amount * (*btc_history.lower_bound(date)).second);
 	std::cout << "\n";
 }
 
 void BitcoinExchange::process_file(std::string const& input_file) const
 {
 	std::string		line;
-	std::ifstream	ifs(input_file);
+	std::ifstream	ifs(input_file.c_str());
 	if (!ifs.good())
 		throw std::invalid_argument("could not open " + input_file);
 	while (ifs.good())
