@@ -7,6 +7,7 @@ $(NAME):
 
 clean:
 	@rm -rf $(NAME).dSYM
+	@rm -rf .vscode
 
 fclean: clean
 	rm $(NAME)

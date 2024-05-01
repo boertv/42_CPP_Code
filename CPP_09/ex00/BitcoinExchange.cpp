@@ -4,10 +4,10 @@
 /*
 STATIC HELPER FUNCTIONS
 */
-static void trim_whitespace(std::string& str, bool trim_leading_nl = false)
+static void trim_whitespace(std::string& str)
 {
 	std::string::iterator it = str.begin();
-	while (it != str.end() && (trim_leading_nl || *it != '\n') && std::isspace(*it))
+	while (it != str.end() && std::isspace(*it))
 		++it;
 	if (str.begin() != it)
 		str.erase(str.begin(), it);
@@ -19,34 +19,32 @@ static void trim_whitespace(std::string& str, bool trim_leading_nl = false)
 		str.erase(it, str.end());
 }
 
-static bool check_nbr(std::string const& nbr, bool is_date = 0)
+static bool check_nbr(std::string const& nbr, bool ban_comma = false)
 {
-	bool point = is_date;
-	if (!nbr.size())
+	if (nbr.empty())
 		return false;
-	for (std::string::const_iterator it = nbr.begin(); it != nbr.end(); ++it)
+
+	std::string::const_iterator it = nbr.begin();
+	if (*it == '-')
+		return false;
+	for (; it != nbr.end(); ++it)
 	{
-		if (std::isdigit(*it))
-			continue ;
-		if (is_date && *it == '-')
-			continue ;
-		if (!point && *it == '.')
+		if (*it == '.' && !ban_comma)
 		{
-			point = true;
+			ban_comma = true;
 			continue ;
 		}
-		return false;
+		if (!std::isdigit(*it))
+			return false;
 	}
 	return true;
 }
 
 static bool check_date(std::string const& date)
 {
-	if (date.size() != 10)
+	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
 		return false;
-	if (!check_nbr(date, true))
-		return false;
-	if (date.find('-') != 4 || date.find('-', 5) != 7 || date.find('-', 8) != std::string::npos)
+	if (!check_nbr(date.substr(0, 4), true) || !check_nbr(date.substr(5, 2), true) || !check_nbr(date.substr(8), true))
 		return false;
 	int	month = (date[5] - '0') * 10 + (date[6] - '0');
 	int	day = (date[8] - '0') * 10 + (date[9] - '0');
@@ -89,15 +87,16 @@ BitcoinExchange::BitcoinExchange(std::string const& btc_file)
 		throw std::invalid_argument("could not open the database: " + btc_file);
 	while (ifs.good())
 	{
-		std::pair<std::string, double>	temp_pair;
-		std::string						temp_nbr;
-		std::getline(ifs, temp_pair.first, ',');
-		if (ifs.eof() && (temp_pair.first.empty() || !temp_pair.first.compare("\n")))
-			break ;
-		trim_whitespace(temp_pair.first, true);
-		if (temp_pair.first.find('\n') != std::string::npos)
-			throw std::invalid_argument("bad database element: " + temp_pair.first.substr(0, temp_pair.first.find('\n')));
-		std::getline(ifs, temp_nbr, '\n');
+		std::string line;
+		std::getline(ifs, line);
+		if (line.empty())
+			continue ;
+		if (line.find(',') == std::string::npos)
+			throw std::invalid_argument("bad database element: " + line);
+		std::pair<std::string, double> temp_pair;
+		temp_pair.first = line.substr(0, line.find(','));
+		std::string temp_nbr = line.substr(line.find(',') + 1);
+		trim_whitespace(temp_pair.first);
 		trim_whitespace(temp_nbr);
 		if (!temp_pair.first.compare("date") && !temp_nbr.compare("exchange_rate"))
 			continue ;
