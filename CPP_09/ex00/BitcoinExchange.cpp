@@ -99,7 +99,7 @@ BitcoinExchange::BitcoinExchange(std::string const& btc_file)
 			continue ;
 		if (line.find(',') == std::string::npos)
 			throw std::invalid_argument("bad database element: " + line);
-		std::pair<std::string, double> temp_pair;
+		std::pair<std::string, float> temp_pair;
 		temp_pair.first = line.substr(0, line.find(','));
 		std::string temp_nbr = line.substr(line.find(',') + 1);
 		trim_whitespace(temp_pair.first);
