@@ -6,11 +6,11 @@
 
 class BitcoinExchange
 {
-	std::map<std::string, float> btc_history; // is float accurate enough? i dunno that's what they asked innit
+	std::map<std::string, float> btc_history;
 
 public:
 	BitcoinExchange();
-	BitcoinExchange(std::string const& btc_file); // maybe check if file is really closed in all cases
+	BitcoinExchange(std::string const& btc_file);
 	BitcoinExchange(BitcoinExchange const& src);
 	~BitcoinExchange();
 	BitcoinExchange& operator=(BitcoinExchange const& rhs);
