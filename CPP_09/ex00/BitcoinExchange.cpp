@@ -150,9 +150,11 @@ void BitcoinExchange::process_line(std::string const& input_line) const
 	float amount = static_cast<float>(std::atof(amount_str.c_str()));
 	if (amount > 1000)
 		throw std::invalid_argument(amount_str + " is a too large value");
-	std::cout << date << " => " << amount << " = ";
-	std::cout << (amount * (*btc_history.lower_bound(date)).second);
-	std::cout << "\n";
+	std::map<std::string, float>::const_iterator it = btc_history.upper_bound(date);
+	if (it == btc_history.begin())
+		throw std::invalid_argument(date + " is older than all database entries");
+	--it;
+	std::cout << date << " => " << amount << " = " << amount * (*it).second << "\n";
 }
 
 void BitcoinExchange::process_file(std::string const& input_file) const
