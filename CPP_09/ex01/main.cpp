@@ -1,3 +1,15 @@
-// deque? put the stuff in there at the start (with checks?) and then parse it for calc
-		// OR put only the current calc in there (and use size() for interpreting (2 vs 3))
-		// AND ALSO MAYBE have a container of 'work mem' to put the result and all the temp numbers (e.g. 2 4 - 2 4 - 2 4 - ... - - ...)
+#include "RPN.hpp"
+
+int main(int ac, char **av)
+{
+	if (ac != 2)
+		return std::cout << "Error: amount of arguments\n", 1;
+	try {
+		RPN rpn_class(av[1]);
+		rpn_class.run_calc();
+	}
+	catch (std::exception const& e) {
+		std::cout << e.what() << std::endl;
+		return 1;
+	}
+}
