@@ -9,24 +9,26 @@
 
 class PmergeMe
 {
-	int const*	input;
-	int			input_size;
+	int const*			input;
+	int					input_size;
 
 	template<typename C>
-	static void binary_insert(C container, int end_index, int to_add);
+	static void merge_insert_sort(C& container, int* old_pos = nullptr);
 
 public:
+	std::vector<int>	vector;
+
 	PmergeMe();
 	~PmergeMe();
 	PmergeMe(PmergeMe const& src);
 	PmergeMe& operator=(PmergeMe const& rhs);
 	PmergeMe(int const* numbers, int size);
 
+	template<typename C>
+	static void print_container(C const& container, std::string msg);
+	void sort_vector();
 	void do_vector() const;
 	void do_list() const;
-
-	template<typename C>
-	static void merge_insert_sort(C container, int* old_pos = nullptr);
 };
 
 # include "PmergeMe.tpp"
