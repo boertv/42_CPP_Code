@@ -7,6 +7,7 @@ class SortIteration
 	C&		container;
 	C		pair_sml;
 	int*	new_pos;
+	int*	sml_pos;
 
 	SortIteration();
 	SortIteration(SortIteration const& src);
@@ -18,7 +19,7 @@ class SortIteration
 
 public:
 	C		pair_big;
-	int*	old_pos;
+	int*	big_pos;
 
 	~SortIteration();
 	SortIteration(int size, C& container, int* new_pos);

@@ -1,7 +1,7 @@
 #include "PmergeMe.hpp"
 
 /* CONSTRUCTORS */
-PmergeMe::PmergeMe() : input(nullptr), input_size(0) {}
+PmergeMe::PmergeMe() : input(NULL), input_size(0) {}
 PmergeMe::~PmergeMe() {}
 PmergeMe::PmergeMe(PmergeMe const& src) { this->operator=(src); }
 PmergeMe& PmergeMe::operator=(PmergeMe const& rhs)

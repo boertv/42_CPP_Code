@@ -13,7 +13,7 @@ class PmergeMe
 	int					input_size;
 
 	template<typename C>
-	static void merge_insert_sort(C& container, int* old_pos = nullptr);
+	static void merge_insert_sort(C& container, int* big_pos = NULL);
 
 public:
 	std::vector<int>	vector;

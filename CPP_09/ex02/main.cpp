@@ -44,7 +44,15 @@ int main(int ac, char** av)
 		return 1;
 	PmergeMe my_class(input, ac - 1);
 	PmergeMe::print_container(my_class.vector, "before:");
+//test
+std::vector<int> comparison(my_class.vector);
 	my_class.sort_vector();
 	PmergeMe::print_container(my_class.vector, "after:");
+//test
+std::sort(comparison.begin(), comparison.end());
+if (my_class.vector != comparison)
+std::cout << "!!!!! THE SORT DON'T WORK !!!!!\n";
 	// my_class.do_vector();
 }
+
+// doesn't work with 8 5 10 4 6 7 1 3 9 2

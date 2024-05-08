@@ -8,18 +8,25 @@ SortIteration<C>::SortIteration() {}
 template<typename C>
 SortIteration<C>::~SortIteration()
 {
-	delete [] old_pos;
+	delete [] big_pos;
+	delete [] sml_pos;
 }
 
 template<typename C>
 SortIteration<C>::SortIteration(int size, C& container, int* new_pos)
 	: container(container), pair_sml(size), new_pos(new_pos), pair_big(size)
 {
-	old_pos = new int[size];
+	big_pos = new int[size];
+	sml_pos = new int[size + container.size() % 2];
 }
 
 template<typename C>
-SortIteration<C>::SortIteration(SortIteration<C> const& src) : old_pos(nullptr) { this->operator=(src); }
+SortIteration<C>::SortIteration(SortIteration<C> const& src)
+{
+	big_pos = new int[src.pair_big.size()];
+	sml_pos = new int[src.pair_sml.size()]; 
+	this->operator=(src);
+}
 
 template<typename C>
 SortIteration<C>& SortIteration<C>::operator=(SortIteration<C> const& rhs)
@@ -27,9 +34,12 @@ SortIteration<C>& SortIteration<C>::operator=(SortIteration<C> const& rhs)
 	container = rhs.container;
 	pair_big = rhs.pair_big;
 	pair_sml = rhs.pair_sml;
-	new_pos = rhs.new_pos;
-	delete [] old_pos;
-	old_pos = rhs.old_pos;
+	for (size_t i = 0; i < pair_big.size() + pair_sml.size(); ++i)
+		new_pos[i] = rhs.new_pos[i];
+	for (size_t i = 0; i < pair_big.size(); ++i)
+		big_pos[i] = rhs.big_pos[i];
+	for (size_t i = 0; i < pair_sml.size(); ++i)
+		sml_pos[i] = rhs.sml_pos[i];
 	return *this;
 }
 
@@ -37,6 +47,12 @@ SortIteration<C>& SortIteration<C>::operator=(SortIteration<C> const& rhs)
 template<typename C>
 void SortIteration<C>::create_pairs()
 {
+//test
+// if (new_pos)
+// {
+// for (size_t i = 0; i < container.size(); ++i)
+// new_pos[i] = -1;
+// }
 	for (std::size_t i = 0; i + 1 < container.size(); i += 2)
 	{
 		if (container[i] > container[i + 1])
@@ -46,7 +62,7 @@ void SortIteration<C>::create_pairs()
 			if (new_pos)
 			{
 				new_pos[i / 2] = i;
-				new_pos[pair_big.size() + i / 2] = i + 1;
+				sml_pos[i / 2] = i + 1;
 			}
 		}
 		else
@@ -56,15 +72,14 @@ void SortIteration<C>::create_pairs()
 			if (new_pos)
 			{
 				new_pos[i / 2] = i + 1;
-				new_pos[pair_big.size() + i / 2] = i;
+				sml_pos[i / 2] = i;
 			}
 		}
 	}
 	if (container.size() % 2)
 	{
 		pair_sml.push_back(container.back());
-		if (new_pos)
-			new_pos[container.size() - 1] = container.size() - 1;
+		sml_pos[pair_sml.size() - 1] = container.size() - 1;
 	}
 }
 
@@ -79,18 +94,22 @@ void SortIteration<C>::update_big_pos()
 		swap[i] = new_pos[i];
 
 	for (std::size_t i = 0; i < pair_big.size(); ++i)
-		new_pos[i] = swap[old_pos[i]];
+		new_pos[i] = swap[big_pos[i]];
 }
 
 template<typename C>
-void SortIteration<C>::update_index_pos(int index_new, int index_old)
+void SortIteration<C>::update_index_pos(int index_new, int sml_index)
 {
 	if (!new_pos)
 		return ;
-	int swap = new_pos[index_old];
-	for (int i = index_old; i > index_new; --i)
+	for (int i = container.size() - 1; i > index_new; --i)
 		new_pos[i] = new_pos[i - 1];
-	new_pos[index_new] = swap;
+	new_pos[index_new] = sml_pos[sml_index];
+//test
+// std::cout << "placing " << sml_pos[sml_index] << " at position " << index_new << " > ";
+// for (size_t i = 0; i < pair_big.size() + pair_sml.size(); ++i)
+// std::cout << new_pos[i] << " ";
+// std::cout << "\n";
 }
 
 template<typename C>
@@ -137,24 +156,37 @@ int SortIteration<C>::binary_insert(int upper_limit, int to_add)
 template<typename C>
 void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int upper_limit)
 {
+//test
+// std::cout << "binary insert loop from " << upper_index << " to " << lower_index << "\n";
 	if (static_cast<std::size_t>(upper_index) >= pair_sml.size() - 1)
 	{
 		upper_limit = container.size() - 1;
 		upper_index = pair_sml.size() - 2;
-		int insert_index = binary_insert(upper_limit, pair_sml.back());
+		int insert_index;
+		if (pair_sml.size() > pair_big.size())
+		{
+			insert_index = binary_insert(upper_limit, pair_sml.back());
+			update_index_pos(insert_index, pair_sml.size() - 1);
+		}
+		else
+		{
+			insert_index = binary_insert(upper_limit, pair_sml[big_pos[pair_big.size() - 1]]);
+			update_index_pos(insert_index, big_pos[pair_big.size() - 1]);
+		}
 		if (insert_index == upper_limit)
 			--upper_limit;
-		this->update_index_pos(insert_index, pair_big.size() + pair_sml.size() - 1);
-	}
 //test
-// std::cout << "binary insert loop from " << upper_index << " to " << lower_index << "\n";
+// std::cout << "continuing loop from " << upper_index << "\n";
+	}
 	for (; upper_index >= lower_index; --upper_index)
 	{
-		int insert_index = binary_insert(upper_limit, pair_sml[old_pos[upper_index]]);
+		int insert_index = binary_insert(upper_limit, pair_sml[big_pos[upper_index]]);
 		if (insert_index == upper_limit)
 			--upper_limit;
-		this->update_index_pos(insert_index, pair_big.size() + old_pos[upper_index]);
+		update_index_pos(insert_index, big_pos[upper_index]);
 	}
+//test
+// std::cout << "ending loop\n";
 }
 
 template<typename C>
@@ -164,15 +196,22 @@ void SortIteration<C>::insert_pairs()
 	int			old_increment = 1;
 	int			increment = 2;
 //test
-PmergeMe::print_container(container, "pre insert:");
-PmergeMe::print_container(pair_sml, "inserting:");
-std::cout << "old_pos:\t";
-for (size_t i = 0; i < pair_big.size(); ++i)
-std::cout << old_pos[i] << " ";
-std::cout << "\n";
+// PmergeMe::print_container(container, "pre insert:");
+// PmergeMe::print_container(pair_sml, "inserting:");
+// std::cout << "big_pos:\t";
+// for (size_t i = 0; i < pair_big.size(); ++i)
+// std::cout << big_pos[i] << " ";
+// std::cout << "\n";
+// if (new_pos)
+// {
+// std::cout << "pre new_pos:\t";
+// for (size_t i = 0; i < pair_big.size() + pair_sml.size(); ++i)
+// std::cout << new_pos[i] << " ";
+// std::cout << "\n";
+// }
 
-	container.insert(container.begin(), pair_sml[old_pos[0]]);
-	update_index_pos(0, pair_big.size() + old_pos[0]);
+	container.insert(container.begin(), pair_sml[big_pos[0]]);
+	update_index_pos(0, big_pos[0]);
 
 	while (amount_done < pair_sml.size())
 	{
@@ -183,5 +222,13 @@ std::cout << "\n";
 		old_increment = temp;
 	}
 //test
-PmergeMe::print_container(container, "post insert:");
+// PmergeMe::print_container(container, "post insert:");
+// if (new_pos)
+// {
+// std::cout << "post new_pos:\t";
+// for (size_t i = 0; i < pair_big.size() + pair_sml.size(); ++i)
+// std::cout << new_pos[i] << " ";
+// std::cout << "\n";
+// }
+// std::cout << "\n";
 }
