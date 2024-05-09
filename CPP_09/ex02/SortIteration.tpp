@@ -173,7 +173,7 @@ void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int 
 			insert_index = binary_insert(upper_limit, pair_sml[big_pos[pair_big.size() - 1]]);
 			update_index_pos(insert_index, big_pos[pair_big.size() - 1]);
 		}
-		if (insert_index == upper_limit)
+		if (insert_index > upper_limit)
 			--upper_limit;
 //test
 // std::cout << "continuing loop from " << upper_index << "\n";
@@ -181,7 +181,7 @@ void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int 
 	for (; upper_index >= lower_index; --upper_index)
 	{
 		int insert_index = binary_insert(upper_limit, pair_sml[big_pos[upper_index]]);
-		if (insert_index == upper_limit)
+		if (insert_index > upper_limit)
 			--upper_limit;
 		update_index_pos(insert_index, big_pos[upper_index]);
 	}

@@ -54,5 +54,3 @@ if (my_class.vector != comparison)
 std::cout << "!!!!! THE SORT DON'T WORK !!!!!\n";
 	// my_class.do_vector();
 }
-
-// doesn't work with 8 5 10 4 6 7 1 3 9 2
