@@ -24,7 +24,7 @@ template<typename C>
 SortIteration<C>::SortIteration(SortIteration<C> const& src)
 {
 	big_pos = new int[src.pair_big.size()];
-	sml_pos = new int[src.pair_sml.size()]; 
+	sml_pos = new int[src.pair_sml.size()];
 	this->operator=(src);
 }
 
@@ -43,9 +43,25 @@ SortIteration<C>& SortIteration<C>::operator=(SortIteration<C> const& rhs)
 	return *this;
 }
 
+/* STATIC MEMBERS */
+template<typename C>
+int SortIteration<C>::at(std::vector<int> const& container, int index)
+{
+	return container[index];
+}
+
+// list specialization
+template<typename C>
+int SortIteration<C>::at(std::list<int> const& container, int index)
+{
+	std::list<int>::const_iterator it = container.begin();
+	std::advance(it, index);
+	return *it;
+}
+
 /* MEMBER FUNCTIONS */
 template<typename C>
-void SortIteration<C>::create_pairs()
+void SortIteration<C>::create_pairs(std::vector<int> const& type)
 {
 //test
 // if (new_pos)
@@ -53,6 +69,7 @@ void SortIteration<C>::create_pairs()
 // for (size_t i = 0; i < container.size(); ++i)
 // new_pos[i] = -1;
 // }
+	(void)type;
 	for (std::size_t i = 0; i + 1 < container.size(); i += 2)
 	{
 		if (container[i] > container[i + 1])
@@ -75,6 +92,53 @@ void SortIteration<C>::create_pairs()
 				sml_pos[i / 2] = i;
 			}
 		}
+	}
+	if (container.size() % 2)
+	{
+		pair_sml.push_back(container.back());
+		sml_pos[pair_sml.size() - 1] = container.size() - 1;
+	}
+}
+
+// list specialization
+template<typename C>
+void SortIteration<C>::create_pairs(std::list<int> const& type)
+{
+//test
+// if (new_pos)
+// {
+// for (size_t i = 0; i < container.size(); ++i)
+// new_pos[i] = -1;
+// }
+	(void)type;
+	std::list<int>::const_iterator cont_it = container.begin();
+	std::list<int>::iterator big_it = pair_big.begin();
+	std::list<int>::iterator sml_it = pair_sml.begin();
+	for (std::size_t i = 0; i + 1 < container.size(); i += 2)
+	{
+		if (*cont_it > *(std::next(cont_it)))
+		{
+			*big_it = *cont_it;
+			*sml_it = *(std::next(cont_it));
+			if (new_pos)
+			{
+				new_pos[i / 2] = i;
+				sml_pos[i / 2] = i + 1;
+			}
+		}
+		else
+		{
+			*big_it = *(std::next(cont_it));
+			*sml_it = *cont_it;
+			if (new_pos)
+			{
+				new_pos[i / 2] = i + 1;
+				sml_pos[i / 2] = i;
+			}
+		}
+		std::advance(cont_it, 2);
+		std::advance(big_it, 1);
+		std::advance(sml_it, 1);
 	}
 	if (container.size() % 2)
 	{
@@ -132,9 +196,9 @@ int SortIteration<C>::binary_insert(int upper_limit, int to_add)
 	int lower_limit = 0;
 	while (lower_limit != upper_limit)
 	{
-		if (container[((upper_limit - lower_limit) / 2) + lower_limit] == to_add)
+		if (at(container, ((upper_limit - lower_limit) / 2) + lower_limit) == to_add)
 			return insert_at_index((upper_limit - lower_limit) / 2 + lower_limit + 1, to_add);
-		if (container[((upper_limit - lower_limit) / 2) + lower_limit] > to_add)
+		if (at(container, ((upper_limit - lower_limit) / 2) + lower_limit) > to_add)
 		{
 			upper_limit = ((upper_limit - lower_limit) / 2) + lower_limit - 1;
 			if (lower_limit > upper_limit)
@@ -147,7 +211,7 @@ int SortIteration<C>::binary_insert(int upper_limit, int to_add)
 				return insert_at_index(upper_limit, to_add);
 		}
 	}
-	if (container[lower_limit] > to_add)
+	if (at(container, lower_limit) > to_add)
 		return insert_at_index(lower_limit, to_add);
 	else
 		return insert_at_index(lower_limit + 1, to_add);
@@ -170,7 +234,7 @@ void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int 
 		}
 		else
 		{
-			insert_index = binary_insert(upper_limit, pair_sml[big_pos[pair_big.size() - 1]]);
+			insert_index = binary_insert(upper_limit, at(pair_sml, big_pos[pair_big.size() - 1]));
 			update_index_pos(insert_index, big_pos[pair_big.size() - 1]);
 		}
 		if (insert_index > upper_limit)
@@ -180,7 +244,7 @@ void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int 
 	}
 	for (; upper_index >= lower_index; --upper_index)
 	{
-		int insert_index = binary_insert(upper_limit, pair_sml[big_pos[upper_index]]);
+		int insert_index = binary_insert(upper_limit, at(pair_sml, big_pos[upper_index]));
 		if (insert_index > upper_limit)
 			--upper_limit;
 		update_index_pos(insert_index, big_pos[upper_index]);
@@ -210,7 +274,7 @@ void SortIteration<C>::insert_pairs()
 // std::cout << "\n";
 // }
 
-	container.insert(container.begin(), pair_sml[big_pos[0]]);
+	container.insert(container.begin(), at(pair_sml, big_pos[0]));
 	update_index_pos(0, big_pos[0]);
 
 	while (amount_done < pair_sml.size())

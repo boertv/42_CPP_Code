@@ -46,11 +46,19 @@ int main(int ac, char** av)
 	PmergeMe::print_container(my_class.vector, "before:");
 //test
 std::vector<int> comparison(my_class.vector);
-	my_class.sort_vector();
+	PmergeMe::merge_insert_sort(my_class.vector);
 	PmergeMe::print_container(my_class.vector, "after:");
 //test
 std::sort(comparison.begin(), comparison.end());
 if (my_class.vector != comparison)
-std::cout << "!!!!! THE SORT DON'T WORK !!!!!\n";
-	// my_class.do_vector();
+std::cout << "!!!!! THE VECTOR SORT DON'T WORK !!!!!\n";
+	my_class.do_vector();
+	my_class.do_list();
+//test
+std::list<int> test_list(input, input + ac - 1);
+std::list<int> cpy_list(test_list);
+PmergeMe::merge_insert_sort(test_list);
+cpy_list.sort();
+if (test_list != cpy_list)
+std::cout << "!!!!! THE LIST SORT DON'T WORK !!!!!\n";
 }

@@ -9,11 +9,8 @@
 
 class PmergeMe
 {
-	int const*			input;
-	int					input_size;
-
-	template<typename C>
-	static void merge_insert_sort(C& container, int* big_pos = NULL);
+	int const*	input;
+	int			input_size;
 
 public:
 	std::vector<int>	vector;
@@ -26,7 +23,9 @@ public:
 
 	template<typename C>
 	static void print_container(C const& container, std::string msg);
-	void sort_vector();
+	template<typename C>
+	static void merge_insert_sort(C& container, int* big_pos = NULL);
+
 	void do_vector() const;
 	void do_list() const;
 };

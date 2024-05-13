@@ -11,17 +11,11 @@ PmergeMe::PmergeMe(int const* numbers, int size)
 	: input(numbers), input_size(size), vector(input, input + input_size) {}
 
 /* MEMBER FUNCTIONS */
-void PmergeMe::sort_vector()
-{
-	PmergeMe::merge_insert_sort(vector);
-}
-
 void PmergeMe::do_vector() const
 {
-	std::cout << "Time to process a range of " << input_size << " elements with std::[vector] : ";
+	std::cout << "Time to process a range of " << input_size << " elements with 'std::vector' :\t";
 	std::clock_t start_time = clock();
 	{
-		// do data managing and sorting
 		std::vector<int> container(input, input + input_size);
 		PmergeMe::merge_insert_sort(container);
 	}
@@ -30,12 +24,11 @@ void PmergeMe::do_vector() const
 
 void PmergeMe::do_list() const
 {
-	std::cout << "Time to process a range of " << input_size << " elements with std::[list] : ";
+	std::cout << "Time to process a range of " << input_size << " elements with 'std::list' :\t";
 	std::clock_t start_time = clock();
 	{
-		// do data managing and sorting
-		// might have to use seperate code for this after all ... (no operator[])
 		std::list<int> container(input, input + input_size);
+		PmergeMe::merge_insert_sort(container);
 	}
 	std::cout << 1000.0 * (clock() - start_time) / CLOCKS_PER_SEC << "ms\n";
 }

@@ -24,7 +24,10 @@ public:
 	~SortIteration();
 	SortIteration(int size, C& container, int* new_pos);
 
-	void create_pairs();
+	static int at(std::vector<int> const& container, int index);
+	static int at(std::list<int> const& container, int index);
+	void create_pairs(std::vector<int> const& type);
+	void create_pairs(std::list<int> const& type);
 	void update_big_pos();
 	void update_index_pos(int index_new, int index_old);
 	void insert_pairs();
