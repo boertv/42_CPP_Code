@@ -63,12 +63,6 @@ int SortIteration<C>::at(std::list<int> const& container, int index)
 template<typename C>
 void SortIteration<C>::create_pairs(std::vector<int> const& type)
 {
-//test
-// if (new_pos)
-// {
-// for (size_t i = 0; i < container.size(); ++i)
-// new_pos[i] = -1;
-// }
 	(void)type;
 	for (std::size_t i = 0; i + 1 < container.size(); i += 2)
 	{
@@ -104,12 +98,6 @@ void SortIteration<C>::create_pairs(std::vector<int> const& type)
 template<typename C>
 void SortIteration<C>::create_pairs(std::list<int> const& type)
 {
-//test
-// if (new_pos)
-// {
-// for (size_t i = 0; i < container.size(); ++i)
-// new_pos[i] = -1;
-// }
 	(void)type;
 	std::list<int>::const_iterator cont_it = container.begin();
 	std::list<int>::iterator big_it = pair_big.begin();
@@ -169,18 +157,11 @@ void SortIteration<C>::update_index_pos(int index_new, int sml_index)
 	for (int i = container.size() - 1; i > index_new; --i)
 		new_pos[i] = new_pos[i - 1];
 	new_pos[index_new] = sml_pos[sml_index];
-//test
-// std::cout << "placing " << sml_pos[sml_index] << " at position " << index_new << " > ";
-// for (size_t i = 0; i < pair_big.size() + pair_sml.size(); ++i)
-// std::cout << new_pos[i] << " ";
-// std::cout << "\n";
 }
 
 template<typename C>
 int SortIteration<C>::insert_at_index(int index, int to_add)
 {
-//test
-// std::cout << " inserting " << to_add << " at index " << index; PmergeMe::print_container(container, " in");
 	typename C::iterator it = container.begin();
 	std::advance(it, index);
 	container.insert(it, to_add);
@@ -191,8 +172,6 @@ int SortIteration<C>::insert_at_index(int index, int to_add)
 template<typename C>
 int SortIteration<C>::binary_insert(int upper_limit, int to_add)
 {
-//test
-// std::cout << "with upper_limit " << upper_limit;
 	int lower_limit = 0;
 	while (lower_limit != upper_limit)
 	{
@@ -207,7 +186,7 @@ int SortIteration<C>::binary_insert(int upper_limit, int to_add)
 		else
 		{
 			lower_limit = ((upper_limit - lower_limit) / 2) + lower_limit + 1;
-			if (lower_limit > upper_limit) // i don't think this ever happens?
+			if (lower_limit > upper_limit)
 				return insert_at_index(upper_limit, to_add);
 		}
 	}
@@ -220,8 +199,6 @@ int SortIteration<C>::binary_insert(int upper_limit, int to_add)
 template<typename C>
 void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int upper_limit)
 {
-//test
-// std::cout << "binary insert loop from " << upper_index << " to " << lower_index << "\n";
 	if (static_cast<std::size_t>(upper_index) >= pair_sml.size() - 1)
 	{
 		upper_limit = container.size() - 1;
@@ -239,8 +216,6 @@ void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int 
 		}
 		if (insert_index > upper_limit)
 			--upper_limit;
-//test
-// std::cout << "continuing loop from " << upper_index << "\n";
 	}
 	for (; upper_index >= lower_index; --upper_index)
 	{
@@ -249,8 +224,6 @@ void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int 
 			--upper_limit;
 		update_index_pos(insert_index, big_pos[upper_index]);
 	}
-//test
-// std::cout << "ending loop\n";
 }
 
 template<typename C>
@@ -259,20 +232,6 @@ void SortIteration<C>::insert_pairs()
 	std::size_t amount_done = 1;
 	int			old_increment = 1;
 	int			increment = 2;
-//test
-// PmergeMe::print_container(container, "pre insert:");
-// PmergeMe::print_container(pair_sml, "inserting:");
-// std::cout << "big_pos:\t";
-// for (size_t i = 0; i < pair_big.size(); ++i)
-// std::cout << big_pos[i] << " ";
-// std::cout << "\n";
-// if (new_pos)
-// {
-// std::cout << "pre new_pos:\t";
-// for (size_t i = 0; i < pair_big.size() + pair_sml.size(); ++i)
-// std::cout << new_pos[i] << " ";
-// std::cout << "\n";
-// }
 
 	container.insert(container.begin(), at(pair_sml, big_pos[0]));
 	update_index_pos(0, big_pos[0]);
@@ -285,14 +244,4 @@ void SortIteration<C>::insert_pairs()
 		increment = old_increment * 2 + increment;
 		old_increment = temp;
 	}
-//test
-// PmergeMe::print_container(container, "post insert:");
-// if (new_pos)
-// {
-// std::cout << "post new_pos:\t";
-// for (size_t i = 0; i < pair_big.size() + pair_sml.size(); ++i)
-// std::cout << new_pos[i] << " ";
-// std::cout << "\n";
-// }
-// std::cout << "\n";
 }

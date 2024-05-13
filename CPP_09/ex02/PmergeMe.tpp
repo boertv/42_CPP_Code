@@ -14,15 +14,7 @@ void PmergeMe::merge_insert_sort(C& container, int* new_pos)
 	}
 	SortIteration<C> iteration(container.size() / 2, container, new_pos);
 	iteration.create_pairs(container);
-//test
-// print_container(iteration.pair_big, " pre sort:");
 	merge_insert_sort(iteration.pair_big, iteration.big_pos);
-//test
-// print_container(iteration.pair_big, " post sort:");
-// std::cout << "ppost sort:\t";
-// for (size_t i = 0; i < iteration.pair_big.size(); ++i)
-// std::cout << iteration.big_pos[i] << " ";
-// std::cout << "\n";
 	iteration.update_big_pos();
 	container = iteration.pair_big;
 	iteration.insert_pairs();
