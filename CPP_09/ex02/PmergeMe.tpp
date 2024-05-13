@@ -21,7 +21,7 @@ void PmergeMe::merge_insert_sort(C& container, int* new_pos)
 }
 
 template<typename C>
-void PmergeMe::print_container(C const& container, std::string msg)
+void PmergeMe::print_container(C const& container, std::string const& msg)
 {
 	std::cout << msg << "\t";
 	for (typename C::const_iterator it = container.begin(); it != container.end(); ++it)

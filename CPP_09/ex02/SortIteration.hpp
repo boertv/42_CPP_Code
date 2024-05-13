@@ -13,9 +13,12 @@ class SortIteration
 	SortIteration(SortIteration const& src);
 	SortIteration& operator=(SortIteration const& rhs);
 
+	static int at(std::vector<int> const& container, int index);
+	static int at(std::list<int> const& container, int index);
 	int insert_at_index(int index, int to_add);
 	int binary_insert(int upper_index, int to_add);
 	void loop_binary_insert(int lower_index, int upper_index, int upper_limit);
+	void update_index_pos(int index_new, int index_old);
 
 public:
 	C		pair_big;
@@ -24,12 +27,9 @@ public:
 	~SortIteration();
 	SortIteration(int size, C& container, int* new_pos);
 
-	static int at(std::vector<int> const& container, int index);
-	static int at(std::list<int> const& container, int index);
 	void create_pairs(std::vector<int> const& type);
 	void create_pairs(std::list<int> const& type);
 	void update_big_pos();
-	void update_index_pos(int index_new, int index_old);
 	void insert_pairs();
 };
 

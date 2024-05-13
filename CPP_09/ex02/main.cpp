@@ -43,9 +43,7 @@ int main(int ac, char** av)
 	if (!convert_input(ac, av, input))
 		return 1;
 	PmergeMe my_class(input, ac - 1);
-	PmergeMe::print_container(my_class.vector, "before:");
-	PmergeMe::merge_insert_sort(my_class.vector);
-	PmergeMe::print_container(my_class.vector, "after:");
+	my_class.do_sort_print();
 	my_class.do_vector();
 	my_class.do_list();
 }
