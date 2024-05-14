@@ -16,7 +16,7 @@ int main()
 			sp.addManyNumber(ve.begin(), ve.end());
 		}
 		catch (std::exception const& e)
-		{ std::cout << e.what() << "\n"; }
+		{ std::cout << e.what() << " (" << sp.size() << ")\n"; }
 		std::cout << "shortest: " << sp.shortestSpan() << "\n";
 		std::cout << "longest : " << sp.longestSpan() << "\n";
 		std::cout << "\n";
@@ -30,7 +30,8 @@ int main()
 			while (true)
 				sp.addNumber(rand());
 		}
-		catch (std::exception const& e) {}
+		catch (std::exception const& e)
+		{ std::cout << e.what() << " (" << sp.size() << ")\n"; }
 		std::cout << "shortest: " << sp.shortestSpan() << "\n";
 		std::cout << "longest : " << sp.longestSpan() << "\n";
 	}

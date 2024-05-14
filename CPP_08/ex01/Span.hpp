@@ -15,10 +15,11 @@ public:
 	~Span();
 	Span& operator=(Span const& rhs);
 
-	void		addNumber(int nbr);
-	void		addManyNumber(std::vector<int>::iterator const begin, std::vector<int>::iterator const end);
-	std::size_t	shortestSpan();
-	std::size_t	longestSpan() const;
+	size_t	size() const;
+	void	addNumber(int nbr);
+	void	addManyNumber(std::vector<int>::iterator const begin, std::vector<int>::iterator const end);
+	size_t	shortestSpan();
+	size_t	longestSpan() const;
 };
 
 #endif

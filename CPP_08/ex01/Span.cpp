@@ -1,6 +1,7 @@
 #include "Span.hpp"
 #include <algorithm>
 
+/* CONSTRUCTORS */
 Span::Span() : _numbers(std::vector<int>()), _max(100) {}
 Span::Span(unsigned int N) : _numbers(std::vector<int>()), _max(N) {}
 Span::Span(Span const& src) { this->operator=(src); }
@@ -11,6 +12,10 @@ Span& Span::operator=(Span const& rhs)
 	_max = rhs._max;
 	return *this;
 }
+
+/* MEMBER FUNCTIONS */
+size_t Span::size() const
+{ return _numbers.size(); }
 
 void Span::addNumber(int nbr)
 {
@@ -31,7 +36,7 @@ void Span::addManyNumber(std::vector<int>::iterator const begin, std::vector<int
 		throw (std::length_error("Span is at maximum capacity"));
 }
 
-std::size_t Span::longestSpan() const
+size_t Span::longestSpan() const
 {
 	if (_numbers.size() <= 1)
 		throw (std::range_error("not enough numbers for this operation"));
@@ -39,12 +44,12 @@ std::size_t Span::longestSpan() const
 		- static_cast<size_t>(*(std::min_element(_numbers.begin(), _numbers.end())));
 }
 
-std::size_t Span::shortestSpan()
+size_t Span::shortestSpan()
 {
 	if (_numbers.size() <= 1)
 		throw (std::range_error("not enough numbers for this operation"));
 	std::sort(_numbers.begin(), _numbers.end());
-	std::size_t result = static_cast<size_t>(*(_numbers.rbegin())) - static_cast<size_t>(*(std::next(_numbers.rbegin())));
+	size_t result = static_cast<size_t>(*(_numbers.rbegin())) - static_cast<size_t>(*(std::next(_numbers.rbegin())));
 	for (std::vector<int>::reverse_iterator rit = std::next(_numbers.rbegin()); std::next(rit) != _numbers.rend(); ++rit)
 	{
 		result = std::min<size_t>(result, static_cast<size_t>(*rit) - static_cast<size_t>(*(std::next(rit))));

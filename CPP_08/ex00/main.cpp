@@ -23,10 +23,10 @@ void	write_on_iterator(T const& it, T const& last, int const& value)
 
 int main()
 {
+	int arr[] = {1, 0, 3, 0, 5};
 	{
-		std::vector<int> v(5);
+		std::vector<int> v(arr, arr + 5);
 		std::cout << "vector..\n";
-		v[0] = 1; v[1] = 0; v[2] = 3; v[3] = 0; v[4] = 5;
 		std::cout << "found " << *(easyfind(v, 0)) << " at index " << easyfind(v, 0) - v.begin() << "\n";
 		std::cout << "found " << *(easyfind(v, 5)) << " at index " << easyfind(v, 5) - v.begin() << "\n";
 		print_container(v);
@@ -38,8 +38,7 @@ int main()
 	}
 	{
 		std::cout << "deque..\n";
-		std::deque<int> d(5);
-		d[0] = 1; d[1] = 0; d[2] = 3; d[3] = 0; d[4] = 5;
+		std::deque<int> d(arr, arr + 5);
 		print_container(d);
 		write_on_iterator(easyfind(d, 0), d.end(), 2);
 		write_on_iterator(easyfind(d, 0), d.end(), 4);
