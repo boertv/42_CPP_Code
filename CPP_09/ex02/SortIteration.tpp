@@ -3,7 +3,8 @@
 
 /* CONSTRUCTORS */
 template<typename C>
-SortIteration<C>::SortIteration() {}
+SortIteration<C>::SortIteration()
+	: new_pos(NULL), big_pos(NULL), sml_pos(NULL) {}
 
 template<typename C>
 SortIteration<C>::~SortIteration()
@@ -14,7 +15,7 @@ SortIteration<C>::~SortIteration()
 
 template<typename C>
 SortIteration<C>::SortIteration(int size, C& container, int* new_pos)
-	: container(container), pair_sml(size), new_pos(new_pos), pair_big(size)
+	: container(container), pair_big(size), pair_sml(size), new_pos(new_pos)
 {
 	big_pos = new int[size];
 	sml_pos = new int[size + container.size() % 2];
@@ -42,6 +43,15 @@ SortIteration<C>& SortIteration<C>::operator=(SortIteration<C> const& rhs)
 		sml_pos[i] = rhs.sml_pos[i];
 	return *this;
 }
+
+/* GETTERS */
+template<typename C>
+int* SortIteration<C>::get_big_pos()
+{ return big_pos; }
+
+template<typename C>
+C& SortIteration<C>::get_pair_big()
+{ return pair_big; }
 
 /* STATIC MEMBERS */
 template<typename C>
@@ -229,7 +239,7 @@ void SortIteration<C>::loop_binary_insert(int lower_index, int upper_index, int 
 template<typename C>
 void SortIteration<C>::insert_pairs()
 {
-	std::size_t amount_done = 1;
+	std::size_t	amount_done = 1;
 	int			old_increment = 1;
 	int			increment = 2;
 

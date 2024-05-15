@@ -1,9 +1,7 @@
 #include "BitcoinExchange.hpp"
 #include <fstream>
 
-/*
-STATIC HELPER FUNCTIONS
-*/
+/* STATIC HELPER FUNCTIONS */
 static void trim_whitespace(std::string& str)
 {
 	std::string::iterator it = str.begin();
@@ -77,9 +75,6 @@ static void check_date(std::string const& date)
 		throw std::invalid_argument(date + " has an invalid day");
 }
 
-/*
-CLASS BITCOINEXCHANGE
-*/
 
 /* CONSTRUCTORS AND OPERATOR= */
 BitcoinExchange::BitcoinExchange() {}

@@ -5,8 +5,10 @@ template <typename C>
 class SortIteration
 {
 	C&		container;
+	C		pair_big;
 	C		pair_sml;
 	int*	new_pos;
+	int*	big_pos;
 	int*	sml_pos;
 
 	SortIteration();
@@ -21,11 +23,11 @@ class SortIteration
 	void update_index_pos(int index_new, int index_old);
 
 public:
-	C		pair_big;
-	int*	big_pos;
-
 	~SortIteration();
 	SortIteration(int size, C& container, int* new_pos);
+
+	int* get_big_pos();
+	C&	 get_pair_big();
 
 	void create_pairs(std::vector<int> const& type);
 	void create_pairs(std::list<int> const& type);
@@ -33,5 +35,5 @@ public:
 	void insert_pairs();
 };
 
-#include "SortIteration.tpp"
+# include "SortIteration.tpp"
 #endif

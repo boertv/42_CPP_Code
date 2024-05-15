@@ -14,9 +14,9 @@ void PmergeMe::merge_insert_sort(C& container, int* new_pos)
 	}
 	SortIteration<C> iteration(container.size() / 2, container, new_pos);
 	iteration.create_pairs(container);
-	merge_insert_sort(iteration.pair_big, iteration.big_pos);
+	merge_insert_sort(iteration.get_pair_big(), iteration.get_big_pos());
 	iteration.update_big_pos();
-	container = iteration.pair_big;
+	container = iteration.get_pair_big();
 	iteration.insert_pairs();
 }
 
