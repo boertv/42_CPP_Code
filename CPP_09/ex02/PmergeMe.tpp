@@ -1,6 +1,6 @@
-#ifdef PMERGEME_HPP
-# ifndef PMERGEME_TPP
-#  define PMERGEME_TPP
+#ifdef PMERGEME_H
+# ifndef PMERGEME_T
+#  define PMERGEME_T
 
 #  include "SortIteration.hpp"
 

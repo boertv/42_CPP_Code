@@ -1,6 +1,6 @@
-#ifdef SORTITERATION_HPP
-# ifndef SORTITERATION_TPP
-#  define SORTITERATION_TPP
+#ifdef SORTITERATION_H
+# ifndef SORTITERATION_T
+#  define SORTITERATION_T
 
 /* CONSTRUCTORS */
 template<typename C>
