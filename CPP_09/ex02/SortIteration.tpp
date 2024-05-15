@@ -1,5 +1,6 @@
-#include "SortIteration.hpp"
-// can delete this include .. it's just for vscode
+#ifdef SORTITERATION_HPP
+# ifndef SORTITERATION_TPP
+#  define SORTITERATION_TPP
 
 /* CONSTRUCTORS */
 template<typename C>
@@ -255,3 +256,6 @@ void SortIteration<C>::insert_pairs()
 		old_increment = temp;
 	}
 }
+
+# endif
+#endif

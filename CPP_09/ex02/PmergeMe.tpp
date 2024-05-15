@@ -1,6 +1,8 @@
-#include "PmergeMe.hpp"
-#include "SortIteration.hpp"
-// can delete this include .. it's just for vscode (i think)
+#ifdef PMERGEME_HPP
+# ifndef PMERGEME_TPP
+#  define PMERGEME_TPP
+
+#  include "SortIteration.hpp"
 
 // new_pos has to be a buffer that is at least container.size() big.
 template<typename C>
@@ -28,3 +30,6 @@ void PmergeMe::print_container(C const& container, std::string const& msg)
 		std::cout << *it << " ";
 	std::cout << "\n";
 }
+
+# endif
+#endif
