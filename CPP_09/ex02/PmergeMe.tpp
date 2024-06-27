@@ -33,3 +33,41 @@ void PmergeMe::print_container(C const& container, std::string const& msg)
 
 # endif
 #endif
+
+// EXAMPLE
+/*
+input:
+Container:	9 5 6 7 2 3
+new_pos:	_ _ _ _ _ _
+
+> Separate container in two, bigger and smaller of pairs and keep track of their positions
+
+pair_big:	9 7 3
+new_pos:	0 3 5 _ _ _	(keeping track in new_pos because that is where it will end up anyways)
+
+pair_sml:	5 6 2
+sml_pos:	1 2 4
+
+> Sort the container of the bigger elements
+
+		before:		sorted:
+pair_big:	9 7 3		->	3 7 9
+big_pos:	0 1 2		->	2 1 0
+
+> update the positions of the bigger elements
+
+		before:		sorted:
+new_pos:	0 3 5 _ _ _	->	5 3 0 _ _ _
+
+> input container = container of sorted bigger elements
+> insert everything from the container of smaller elements
+
+Container:
+	Insert 1:
+	container	-> 2 3 7 9
+	new_pos	-> 4 5 3 0 _ _
+
+	the rest:
+	container	-> 2 3 5 6 7 9		(9 5 6 7 2 3)
+	new_pos	-> 4 5 1 2 3 0		(0 1 2 3 4 5)
+*/
