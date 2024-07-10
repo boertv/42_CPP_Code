@@ -57,6 +57,8 @@ void RPN::do_operation()
 			temp_long = static_cast<long>(work_mem.top()) - temp_long;
 			break;
 		case '/':
+			if (!temp_long)
+				throw std::invalid_argument("Error: dividing by zero");
 			temp_long = static_cast<long>(work_mem.top()) / temp_long;
 			break;
 		case '*':
