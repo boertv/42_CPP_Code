@@ -1,4 +1,4 @@
-NAME = bct
+NAME = btc
 
 all:	$(NAME)
 
