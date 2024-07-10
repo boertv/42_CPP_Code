@@ -71,6 +71,8 @@ void RPN::do_operation()
 
 void RPN::run_calc()
 {
+	if (equation.empty() && work_mem.empty())
+		return ;
 	while (!equation.empty())
 	{
 		if (std::isdigit(equation.top()))
